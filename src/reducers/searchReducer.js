@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { API_MOVIE, API_SINGLEMOVIE } from "./actions/searchActions";
+import { API_MOVIE, API_SINGLEMOVIE, BY_YEAR } from "./actions/searchActions";
+import Alert from "@mui/material/Alert";
 
 const initState = {
   movies: [],
@@ -16,10 +17,7 @@ export const searchReducer = createReducer(initState, (builder) => {
       };
     })
     .addCase(API_MOVIE.fulfilled, (state, action) => {
-     /*  const sortedPayload = action.payload.Search.sort(
-        (a, b) => b.Year - a.Year
-      ); */
-console.log(action.payload);
+      console.log(action.payload);
       return {
         ...state,
         movies: action.payload,
@@ -39,4 +37,17 @@ console.log(action.payload);
         loading: false,
       };
     });
+  // .addCase(BY_YEAR.pending, (state, action) => {
+  //   return {
+  //     ...state,
+  //     loading: true,
+  //   };
+  // })
+  // .addCase(BY_YEAR.fulfilled, (state, action) => {
+  //   return {
+  //     ...state,
+  //     movie: action.payload,
+  //     loading: false,
+  //   };
+  // });
 });

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { API_MOVIE, LOADING } from "../../reducers/actions/searchActions";
+import { API_MOVIE, BY_YEAR, LOADING } from "../../reducers/actions/searchActions";
 
 import Box from "@mui/material/Box";
 // import TextField from "@mui/material/TextField";
@@ -12,7 +12,7 @@ import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 
 export const SearchForm = () => {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const dispatch = useDispatch();
 
   const handleInput = (e) => {
@@ -21,7 +21,8 @@ export const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(API_MOVIE(input));
+      dispatch(API_MOVIE(input));
+    // dispatch(BY_YEAR(parseInt(input)))
     dispatch(LOADING());
   };
 

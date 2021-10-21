@@ -18,13 +18,6 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
-// const buttons = [
-
-//   <Button key="one" style={{color: 'white', borderColor: 'white'}} >SIGN IN</Button>,
-//   <Button key="two"style={{color: 'white', borderColor: 'white'}}>SIGN UP</Button>,
-
-// ];
-
 export default function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -80,14 +73,6 @@ export default function Navbar() {
               </Link>
             </ButtonGroup>
           ) : (
-            // <Toolbar>
-            //   <Link to="/login" style={{ textDecoration: "none" }}>
-            //     <Button style={{ fontSize: 25, color: "#fff" }}>SIGN IN</Button>
-            //   </Link>
-            //   <Link to="/register" style={{ textDecoration: "none" }}>
-            //     <Button style={{ fontSize: 25, color: "red" }}>SIGN UP</Button>
-            //   </Link>
-            // </Toolbar>
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-standard-label">
                 {user.username}
@@ -99,12 +84,14 @@ export default function Navbar() {
                 onChange={handleChange}
                 label="Age"
               >
-                <MenuItem value="">
+                {/* <MenuItem value="">
                   <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                </MenuItem> */}
+                <Link to='/favorites' style={{textDecoration: 'none'}}>
+                <MenuItem value={10}>Favorites</MenuItem>
+                </Link>              
+                <MenuItem onClick={handleLogOut} value={20}>Sign Out</MenuItem>
+
               </Select>
             </FormControl>
 

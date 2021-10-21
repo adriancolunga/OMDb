@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const db = require("./config/db");
 
-const { Users } = require("./models/index");
+const { User } = require("./models/index");
 const routes = require("./routes/index");
 
 const app = express();
@@ -31,12 +31,10 @@ app.use(
 
 app.use(cookieParser("secret"));
 
-app.use(passport.initialize());
-app.use(passport.session());
 // require('./config/passport')(passport)
 
 // const LocalStrategy = require("passport-local").Strategy; // estategia local de autenticación
-// const User = require("../models/Users");
+// const User = require("../models/User");
 
 passport.use(
   new LocalStrategy(
@@ -44,33 +42,36 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
     },
-
+    
     (email, password, done) => {
-      Users.findOne({
+      User.findOne({
         where: { email },
       })
-        .then((user) => {
-          if (!user) return done(null, false);
-          user.hashPw(password, user.salt).then((pwHashed) => {
-            if (pwHashed !== user.password) return done(null, false);
-            else return done(null, user);
-          });
-        })
-        .catch(done);
-    }
-  )
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  Users.findOne(id).then((user) => done(null, user));
-});
-
-///// ROUTES /////
-app.use("/api", routes);
+      .then((user) => {
+        if (!user) return done(null, false);
+        user.hashPw(password, user.salt).then((pwHashed) => {
+          if (pwHashed !== user.password) return done(null, false);
+          else return done(null, user);
+        });
+      })
+      .catch(done);
+      }
+      )
+      );
+      
+      passport.serializeUser((user, done) => {
+        done(null, user.id);
+      });
+      
+      passport.deserializeUser((id, done) => {
+        User.findOne(id).then((user) => done(null, user));
+      });
+      
+      app.use(passport.initialize());
+      app.use(passport.session());
+      
+      ///// ROUTES /////
+      app.use("/api", routes);
 
 db.sync({ force: false })
   .then(() => {

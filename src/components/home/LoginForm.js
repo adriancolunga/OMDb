@@ -27,35 +27,18 @@ export default function RegisterForm() {
 
   const [emailForm, setEmailForm] = useState("");
   const [pwForm, setPwForm] = useState("");
-  const [loadingState, setLoadingState] = useState({
-    open: false,
-    vertical: "top",
-    horizontal: "center",
-  });
-
-  const { open, vertical, horizontal } = loadingState;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoadingState({ open: true, ...loadingState });
+
     dispatch(LOGIN_REQUEST({ emailForm, pwForm })).then((r) => {
-      setLoadingState({ open: false, ...loadingState });
       if (r.payload === undefined) alert("usuario y/o contraseña incorrecta");
       else return history.push("/");
     });
   };
 
   return (
-    
     <ThemeProvider theme={theme}>
-       {open ? (
-        <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={open}
-          message="I love snacks"
-          key={vertical + horizontal}
-        />
-      ) : null}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -125,8 +108,7 @@ export default function RegisterForm() {
   );
 }
 
-
-  /* <div className="container">
+/* <div className="container">
 <h3>LOGIN</h3>
 <form onSubmit={handleSubmit}>
 <div className="form-group">
@@ -155,4 +137,3 @@ export default function RegisterForm() {
 </button>
 </form>
 </div> */
-

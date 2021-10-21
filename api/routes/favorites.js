@@ -16,9 +16,15 @@ router.post("/", (req, res) => {
   });
 });
 
-router.get("/all", (req, res) => {
-  Favs.findAll().then((favs) => res.status(200).send(favs));
-})
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const favs = await user.getFavs();
+    res.send(favs);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
 
 router.delete("/:id", (req, res) => {
   Favs.destroy({

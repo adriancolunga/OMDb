@@ -31,7 +31,6 @@
     "react-scripts": "4.0.3",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "selenium-webdriver": "^4.0.0-rc-1",
     "sequelize": "^6.5.0"
   },
   "scripts": {
@@ -64,7 +63,6 @@
     "autoprefixer": "^9.8.7",
     "concurrently": "^6.0.0",
     "nodemon": "^2.0.7",
-    "postcss": "^7.0.38",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
+    "postcss": "^7.0.38"
   }
 }
