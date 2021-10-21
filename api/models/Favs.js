@@ -7,7 +7,6 @@ Favs.init(
     Title: {
       type: S.STRING,
       allowNull: false,
-      unique: true,
     },
     imdbID: {
       type: S.STRING,

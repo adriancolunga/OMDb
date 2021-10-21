@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { ADD_FAV, GET_FAVS, DEL_FAV } from "../../reducers/actions/userActions";
+import {
+  ADD_FAV,
+  GET_FAVS,
+  DEL_FAV,
+} from "../../reducers/actions/userActions";
 import {
   Typography,
   Card,
@@ -11,7 +15,6 @@ import {
   Grid,
   Container,
 } from "@material-ui/core";
-import { Error } from "@material-ui/icons";
 import useStyles from "../layout/movieCardStyle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -22,30 +25,29 @@ export const MovieCard = () => {
   const user = useSelector((state) => state.users.loggedIn);
   const movies = useSelector((state) => state.movies.movies);
   const favorites = useSelector((state) => state.users.allFavs);
-
-  console.log('LAS MOVIES', movies)
+  const [aux, setAux] = useState(true);
 
   const favID = favorites.map(({ imdbID }) => imdbID);
 
   const handleAddFav = async (movie) => {
     await dispatch(ADD_FAV(movie));
-    dispatch(GET_FAVS());
+    setAux(!aux);
   };
 
   const handleDelFav = async (id) => {
     await dispatch(DEL_FAV(id));
-    dispatch(GET_FAVS());
+    setAux(!aux);
   };
-
+  
   useEffect(() => {
-    dispatch(GET_FAVS());
-  }, []);
+    dispatch(GET_FAVS(user.id));
+  }, [aux]);
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
-   
       <Grid container spacing={4}>
-        {movies ? movies.map((movie, i) => (
+        {movies
+          ? movies.map((movie, i) => (
               <Grid item xs={12} sm={4} key={i}>
                 <Card className={classes.card}>
                   <CardMedia
@@ -83,15 +85,7 @@ export const MovieCard = () => {
             ))
           : null}
       </Grid>
-  </Container>
-
-
-
-
-
-
-
-
+    </Container>
 
     // <Container className={classes.cardGrid} maxWidth="md">
     //   {movies.Response === "False" ? (

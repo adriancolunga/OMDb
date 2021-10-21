@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_FAV, GET_FAVS, DEL_FAV } from "../../reducers/actions/userActions";
@@ -27,10 +27,10 @@ export const SingleMovie = ({ id }) => {
   const movie = useSelector((state) => state.movies.movie);
   const loading = useSelector((state) => state.movies.loading);
   const favorites = useSelector((state) => state.users.allFavs);
+  const user = useSelector(state=> state.users.loggedIn)
+  const [aux, setAux] = useState(true);
 
   const isFav = favorites.filter(({ imdbID }) => imdbID === id).length > 0;
-
-  console.log("FAVOOS", favorites);
 
   const {
     Poster,
@@ -47,16 +47,22 @@ export const SingleMovie = ({ id }) => {
   const favHandler = async (e) => {
     e.persist();
     const value = e.target.innerHTML;
-    if (value === "Remove from favorite") await dispatch(DEL_FAV(id));
-    else await dispatch(ADD_FAV(movie));
-    dispatch(GET_FAVS());
+    if (value === "Remove from favorite") {
+      await dispatch(DEL_FAV(id));
+      setAux(!aux);
+    } else {
+      await dispatch(ADD_FAV(movie));
+      setAux(!aux);
+    }
   };
 
   useEffect(() => {
     dispatch(API_SINGLEMOVIE(id));
-    // dispatch(LOADING());
-    dispatch(GET_FAVS());
   }, []);
+
+  useEffect(() => {
+    dispatch(GET_FAVS(user.id));
+  }, [aux]);
 
   return (
     <>
