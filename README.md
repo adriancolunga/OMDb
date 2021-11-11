@@ -1,7 +1,8 @@
 # OMDb
-
+<pre>
 Buscar películas y listarlas.
 Poder ver los detalles de una película en particular.
+</pre>
 Crear Usuarios.
 Loggearse y desloggearse con un usuario.
 Poder agregar una película a tu lista de favoritos.
